@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>thrift.kick.store | Verified Resale & Curated Thrift Kicks</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            black: '#000000',
+            white: '#FFFFFF'
+          },
+          fontFamily: {
+            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strict Core Elements */
+    body, html {
+      background-color: #FFFFFF !important;
+      color: #000000 !important;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Isolated PNG Ground Float Shadow */
+    .shoe-shadow {
+      filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.08));
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+    }
+    .product-card:hover .shoe-shadow {
+      transform: scale(1.05) translateY(-3px);
+      filter: drop-shadow(0 16px 14px rgba(0, 0, 0, 0.14));
+    }
+
+    /* Minimalist 2-Tone Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFFFFF;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #000000;
+    }
+
+    /* Modal Backdrop */
+    .drawer-backdrop {
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(2px);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      background: #FFFFFF;
+      border: 1px solid #000000;
+      height: 4px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 14px;
+      width: 14px;
+      background: #000000;
+      border: 1px solid #FFFFFF;
+      cursor: pointer;
+    }
+
+    /* Story Ring Gradient matching the screenshot */
+    .story-ring-gradient {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+
+    /* Story Progress Animation */
+    @keyframes storyProgress {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+    .story-progress-active {
+      animation: storyProgress 5s linear forwards;
+    }
+  </style>
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col font-sans selection:bg-black selection:text-white">
+
+  <!-- ================= TOP QUERY TICKER ================= -->
+  <aside class="bg-white text-black border-b border-black text-[10px] md:text-[11px] font-normal py-2 px-4 tracking-wider uppercase flex items-center justify-center gap-2">
+    <span>SOLVE YOUR QUERIES FASTER! SEND US A 'HI' ON WHATSAPP AT 8792968173</span>
+    <a href="https://api.whatsapp.com" target="_blank" class="font-bold underline ml-1 hover:opacity-70">CLICK HERE</a>
+  </aside>
+
+  <!-- ================= MAIN NAVIGATION (LOGO GOES HOME) ================= -->
+  <header class="sticky top-0 z-40 bg-black text-white">
+    <div class="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-[72px]">
+        
+        <!-- Mobile Left: Hamburger Menu -->
+        <div class="flex items-center gap-3 lg:hidden">
+          <button onclick="toggleMobileNav(true)" class="p-1 text-white hover:opacity-80" aria-label="Open Menu">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+
+        <!-- Brand Name & Home Logo (Brings User Home on Click) -->
+        <div class="flex items-center gap-8">
+          <button onclick="goHome()" class="flex items-center gap-2.5 text-left group" title="thrift.kick.store - Return to Home">
+            <div class="border border-white p-1 text-white group-hover:bg-white group-hover:text-black transition">
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-sm md:text-base font-semibold lowercase tracking-widest text-white leading-none">
+                thrift<span class="font-normal opacity-75">.kick</span><span class="font-mono text-xs">.store</span>
+              </span>
+              <span class="text-[8px] font-mono tracking-widest text-white/60 uppercase mt-0.5">Verified P2P Archive</span>
+            </div>
+          </button>
+
+          <!-- Desktop Navigation -->
+          <nav class="hidden lg:flex items-center gap-6 text-[13px] font-semibold uppercase tracking-wider text-white">
+            <button onclick="quickFilterMenu('NEW')" class="hover:text-neutral-300 transition">NEW</button>
+            <button onclick="quickFilterMenu('SPORTS')" class="hover:text-neutral-300 transition">SPORTS</button>
+            <button onclick="quickFilterMenu('MEN')" class="hover:text-neutral-300 transition">MEN</button>
+            <button onclick="quickFilterMenu('WOMEN')" class="hover:text-neutral-300 transition">WOMEN</button>
+            <button onclick="quickFilterMenu('MOTORSPORT')" class="hover:text-neutral-300 transition">MOTORSPORT</button>
+            <button onclick="quickFilterCategory('BRAND_NEW')" class="hover:text-neutral-300 transition flex items-center gap-1.5">
+              <span>DEADSTOCK (10/10)</span>
+              <span class="border border-white/60 text-[9px] px-1 font-mono">NEW</span>
+            </button>
+            <button onclick="quickFilterCategory('PRE_LOVED')" class="hover:text-neutral-300 transition flex items-center gap-1.5">
+              <span>THRIFT GRAILS</span>
+              <span class="border border-white/60 text-[9px] px-1 font-mono">GRADED</span>
+            </button>
+            <button onclick="quickFilterMenu('SALE')" class="hover:text-neutral-300 transition">SALE</button>
+          </nav>
+        </div>
+
+        <!-- Right Side: Search, Sell & Icons -->
+        <div class="flex items-center gap-3 md:gap-4">
+          
+          <!-- Desktop Search -->
+          <div class="relative hidden sm:block">
+            <button 
+              onclick="toggleSearchBar()" 
+              class="border border-white/70 hover:border-white px-3.5 py-1.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider transition"
+            >
+              <i data-lucide="search" class="w-3.5 h-3.5"></i>
+              <span>SEARCH</span>
+            </button>
+            <input 
+              type="text" 
+              id="headerSearchInput" 
+              placeholder="SEARCH KICKS, BRANDS..." 
+              oninput="handleSearch(this.value)"
+              class="hidden absolute right-0 top-11 w-64 bg-black border border-white text-white p-2 text-xs font-mono uppercase focus:outline-none z-50"
+            />
+          </div>
+
+          <!-- Mobile Search Trigger -->
+          <button onclick="toggleMobileSearch()" class="sm:hidden text-white p-1" title="Search">
+            <i data-lucide="search" class="w-5 h-5"></i>
+          </button>
+
+          <!-- List Pair Button -->
+          <button 
+            onclick="openSellerModal()" 
+            class="bg-white hover:bg-neutral-200 text-black px-2.5 py-1.5 md:px-3.5 md:py-1.5 text-[11px] md:text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition active:scale-95"
+          >
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">SELL KICKS</span>
+            <span class="sm:hidden">SELL</span>
+          </button>
+
+          <!-- Wishlist Heart -->
+          <button onclick="toggleWishlistModal()" class="text-white relative p-1" title="Wishlist">
+            <i data-lucide="heart" class="w-5 h-5"></i>
+            <span id="wishlistCountBadge" class="absolute -top-1.5 -right-2 bg-white text-black font-mono text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+          </button>
+
+          <!-- Shopping Cart -->
+          <button onclick="toggleCartDrawer(true)" class="text-white relative p-1" title="Cart">
+            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+            <span id="cartCountBadge" class="absolute -top-1.5 -right-2 bg-white text-black font-mono text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+          </button>
+
+          <!-- Account Icon -->
+          <button class="hidden lg:block text-white hover:opacity-75 p-1" title="Account">
+            <i data-lucide="user" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Mobile Search Field -->
+      <div id="mobileSearchBar" class="hidden pb-3 pt-1 border-t border-white/20 lg:hidden">
+        <div class="relative w-full">
+          <input 
+            type="text" 
+            id="mobileSearchInput" 
+            placeholder="Search kicks, brands..." 
+            oninput="handleSearch(this.value)"
+            class="w-full bg-white border border-black text-black py-2 pl-8 pr-3 text-xs font-mono uppercase focus:outline-none"
+          />
+          <i data-lucide="search" class="w-4 h-4 absolute left-2.5 top-2.5 text-black"></i>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= MOBILE MENU DRAWER ================= -->
+  <div id="mobileNavDrawer" class="fixed inset-0 z-50 hidden lg:hidden">
+    <div class="absolute inset-0 drawer-backdrop" onclick="toggleMobileNav(false)"></div>
+    <div class="absolute left-0 top-0 bottom-0 w-4/5 max-w-sm bg-white border-r border-black p-6 flex flex-col justify-between z-50 overflow-y-auto font-mono">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-black">
+          <span class="font-bold text-xs uppercase tracking-widest">thrift.kick.store</span>
+          <button onclick="toggleMobileNav(false)" class="p-1 border border-black">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-4 pt-6 text-xs uppercase tracking-wider">
+          <button onclick="goHome(); toggleMobileNav(false);" class="text-left font-semibold">🏠 BACK TO HOME</button>
+          <button onclick="quickFilterMenu('NEW'); toggleMobileNav(false);" class="text-left hover:underline">NEW ARRIVALS</button>
+          <button onclick="quickFilterMenu('SPORTS'); toggleMobileNav(false);" class="text-left hover:underline">SPORTS</button>
+          <button onclick="quickFilterMenu('MEN'); toggleMobileNav(false);" class="text-left hover:underline">MEN'S KICKS</button>
+          <button onclick="quickFilterMenu('WOMEN'); toggleMobileNav(false);" class="text-left hover:underline">WOMEN'S KICKS</button>
+          <button onclick="quickFilterCategory('BRAND_NEW'); toggleMobileNav(false);" class="text-left hover:underline">DEADSTOCK (10/10)</button>
+          <button onclick="quickFilterCategory('PRE_LOVED'); toggleMobileNav(false);" class="text-left hover:underline">THRIFT GRAILS</button>
+        </nav>
+      </div>
+
+      <div class="pt-6 border-t border-black space-y-3 text-xs">
+        <button onclick="openSellerModal(); toggleMobileNav(false);" class="w-full bg-black text-white py-2.5 uppercase font-medium">
+          + Sell Kicks
+        </button>
+        <p class="text-[10px] text-center opacity-70">100% Escrow Protection</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= RECTANGULAR EVENT & DISCOUNT SLIDER WITH COLORFUL POSTER GRAPHICS ================= -->
+  <section class="border-b border-black relative overflow-hidden py-3 sm:py-4 bg-white">
+    
+    <!-- Previous Slide Button -->
+    <button onclick="prevOfferSlide()" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 border border-black bg-white hover:bg-black hover:text-white transition z-20 shadow-md" aria-label="Previous Offer">
+      <i data-lucide="chevron-left" class="w-4 h-4"></i>
+    </button>
+
+    <!-- Slide Content Box (Exact Rectangular Banner Shape) -->
+    <div class="max-w-[1520px] mx-auto px-4 sm:px-12">
+      <div id="offerSlideWrapper" class="transition-opacity duration-300 w-full min-h-[140px] sm:min-h-[170px] md:min-h-[190px] border border-black overflow-hidden relative flex items-center justify-between">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Next Slide Button -->
+    <button onclick="nextOfferSlide()" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 border border-black bg-white hover:bg-black hover:text-white transition z-20 shadow-md" aria-label="Next Offer">
+      <i data-lucide="chevron-right" class="w-4 h-4"></i>
+    </button>
+
+    <!-- Slide Indicator Dots -->
+    <div id="slideDotsContainer" class="flex items-center justify-center gap-1.5 mt-2.5">
+      <!-- Dots injected via JS -->
+    </div>
+  </section>
+
+  <!-- ================= BREADCRUMBS ================= -->
+  <div class="max-w-[1520px] mx-auto px-4 sm:px-8 pt-5 pb-2">
+    <div class="flex items-center gap-2 text-xs font-normal text-black font-mono">
+      <button onclick="goHome()" class="hover:underline">Home</button>
+      <span>•</span>
+      <button onclick="quickFilterCategory('ALL')" class="hover:underline">Archive</button>
+      <span>•</span>
+      <button onclick="quickFilterCategory('ALL')" class="hover:underline">Collections</button>
+      <span>•</span>
+      <span class="font-semibold uppercase" id="currentBreadcrumb">CURATED DROPS</span>
+    </div>
+  </div>
+
+  <!-- ================= EXACT REVIEW & STYLE CIRCLES (MATCHING SCREENSHOT) ================= -->
+  <section class="py-5 border-b border-black bg-white">
+    <div class="max-w-[1520px] mx-auto px-4 sm:px-8">
+      
+      <!-- 4 Styled Circles with Instagram Story Outer Rings -->
+      <div class="flex items-center justify-center gap-6 sm:gap-14 overflow-x-auto no-scrollbar py-1">
+        
+        <!-- Circle 1: BLACK -->
+        <button onclick="filterByStyleCircle('Black', 0)" class="flex flex-col items-center gap-2 group cursor-pointer shrink-0">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2.5px] story-ring-gradient flex items-center justify-center group-hover:scale-105 transition-transform shadow-md">
+            <div class="w-full h-full rounded-full overflow-hidden border-2 border-white bg-black">
+              <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&fit=crop" alt="Black sneaker on foot" class="w-full h-full object-cover" />
+            </div>
+          </div>
+          <span class="text-xs font-semibold uppercase tracking-wider font-mono">BLACK</span>
+        </button>
+
+        <!-- Circle 2: BALLET -->
+        <button onclick="filterByStyleCircle('Ballet', 1)" class="flex flex-col items-center gap-2 group cursor-pointer shrink-0">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2.5px] story-ring-gradient flex items-center justify-center group-hover:scale-105 transition-transform shadow-md">
+            <div class="w-full h-full rounded-full overflow-hidden border-2 border-white bg-black">
+              <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300&fit=crop" alt="Ballet style on foot" class="w-full h-full object-cover" />
+            </div>
+          </div>
+          <span class="text-xs font-semibold uppercase tracking-wider font-mono">BALLET</span>
+        </button>
+
+        <!-- Circle 3: RED -->
+        <button onclick="filterByStyleCircle('Red', 2)" class="flex flex-col items-center gap-2 group cursor-pointer shrink-0">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2.5px] story-ring-gradient flex items-center justify-center group-hover:scale-105 transition-transform shadow-md">
+            <div class="w-full h-full rounded-full overflow-hidden border-2 border-white bg-black">
+              <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?w=300&fit=crop" alt="Red sneaker on foot" class="w-full h-full object-cover" />
+            </div>
+          </div>
+          <span class="text-xs font-semibold uppercase tracking-wider font-mono">RED</span>
+        </button>
+
+        <!-- Circle 4: MOTORSPORT -->
+        <button onclick="filterByStyleCircle('Motorsport', 3)" class="flex flex-col items-center gap-2 group cursor-pointer shrink-0">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2.5px] story-ring-gradient flex items-center justify-center group-hover:scale-105 transition-transform shadow-md">
+            <div class="w-full h-full rounded-full overflow-hidden border-2 border-white bg-black">
+              <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?w=300&fit=crop" alt="Motorsport style on foot" class="w-full h-full object-cover" />
+            </div>
+          </div>
+          <span class="text-xs font-semibold uppercase tracking-wider font-mono">MOTORSPORT</span>
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= MAIN CATALOG TITLE ================= -->
+  <div class="max-w-[1520px] mx-auto px-4 sm:px-8 pt-7 pb-3">
+    <h1 id="catalogHeaderTitle" class="text-2xl sm:text-3xl font-black uppercase tracking-tight font-sans text-black">
+      CURATED ARCHIVE DROPS
+    </h1>
+  </div>
+
+  <!-- ================= EXACT FILTER TOOLBAR (MATCHING SCREENSHOT) ================= -->
+  <section class="border-t border-b border-black/20 bg-white sticky top-16 md:top-[72px] z-30 py-3">
+    <div class="max-w-[1520px] mx-auto px-4 sm:px-8">
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        
+        <!-- Filter Dropdown Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+          <!-- Filter Sliders Button -->
+          <button onclick="resetFilters()" class="p-2 border border-black/30 hover:border-black rounded-sm flex items-center justify-center transition shrink-0" title="Reset Filters">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Product Type -->
+          <div class="relative shrink-0">
+            <button onclick="toggleFilterMenu('productTypeMenu')" class="border border-black/30 hover:border-black rounded-sm px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 bg-white transition">
+              <span>Product Type</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+            </button>
+            <div id="productTypeMenu" class="hidden absolute top-9 left-0 w-44 bg-white border border-black p-2.5 shadow-lg z-50 text-xs space-y-1.5 font-medium">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="filterProductType('Sneakers')" checked class="accent-black" /> Sneakers</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="filterProductType('Motorsport')" class="accent-black" /> Motorsport</label>
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="relative shrink-0">
+            <button onclick="toggleFilterMenu('priceMenu')" class="border border-black/30 hover:border-black rounded-sm px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 bg-white transition">
+              <span>Price</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+            </button>
+            <div id="priceMenu" class="hidden absolute top-9 left-0 w-52 bg-white border border-black p-3 shadow-lg z-50 text-xs font-mono space-y-2">
+              <div class="flex justify-between text-[11px]">
+                <span>Max:</span>
+                <span id="priceLabel" class="font-bold">₹15,000</span>
+              </div>
+              <input type="range" min="4000" max="25000" step="500" value="25000" id="filterPriceRange" oninput="handlePriceRange(this.value)" class="w-full accent-black cursor-pointer" />
+            </div>
+          </div>
+
+          <!-- Size -->
+          <div class="relative shrink-0">
+            <button onclick="toggleFilterMenu('sizeMenu')" class="border border-black/30 hover:border-black rounded-sm px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 bg-white transition">
+              <span>Size</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+            </button>
+            <div id="sizeMenu" class="hidden absolute top-9 left-0 w-48 bg-white border border-black p-2.5 shadow-lg z-50 grid grid-cols-3 gap-1.5 text-xs font-mono">
+              <button onclick="filterBySize('UK 5')" class="border border-black py-1 hover:bg-black hover:text-white">UK 5</button>
+              <button onclick="filterBySize('UK 6')" class="border border-black py-1 hover:bg-black hover:text-white">UK 6</button>
+              <button onclick="filterBySize('UK 7')" class="border border-black py-1 hover:bg-black hover:text-white">UK 7</button>
+              <button onclick="filterBySize('UK 8')" class="border border-black py-1 hover:bg-black hover:text-white">UK 8</button>
+              <button onclick="filterBySize('UK 9')" class="border border-black py-1 hover:bg-black hover:text-white">UK 9</button>
+              <button onclick="filterBySize('UK 10')" class="border border-black py-1 hover:bg-black hover:text-white">UK 10</button>
+            </div>
+          </div>
+
+          <!-- Colour -->
+          <div class="relative shrink-0">
+            <button onclick="toggleFilterMenu('colorMenu')" class="border border-black/30 hover:border-black rounded-sm px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 bg-white transition">
+              <span>Colour</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+            </button>
+            <div id="colorMenu" class="hidden absolute top-9 left-0 w-40 bg-white border border-black p-2.5 shadow-lg z-50 text-xs space-y-1.5 font-medium">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="filterColor('Black')" class="accent-black" /> Black</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="filterColor('Brown')" class="accent-black" /> Brown</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="filterColor('White')" class="accent-black" /> White</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="filterColor('Red')" class="accent-black" /> Red</label>
+            </div>
+          </div>
+
+          <!-- Discount -->
+          <div class="relative shrink-0">
+            <button onclick="toggleFilterMenu('discountMenu')" class="border border-black/30 hover:border-black rounded-sm px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 bg-white transition">
+              <span>Discount</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+            </button>
+            <div id="discountMenu" class="hidden absolute top-9 left-0 w-36 bg-white border border-black p-2.5 shadow-lg z-50 text-xs space-y-1 font-mono">
+              <button onclick="filterDiscount(0)" class="block w-full text-left py-1 hover:underline">All Drops</button>
+              <button onclick="filterDiscount(10)" class="block w-full text-left py-1 hover:underline">10% and above</button>
+              <button onclick="filterDiscount(20)" class="block w-full text-left py-1 hover:underline">20% and above</button>
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="relative shrink-0">
+            <button onclick="toggleFilterMenu('genderMenu')" class="border border-black/30 hover:border-black rounded-sm px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 bg-white transition">
+              <span>Gender</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+            </button>
+            <div id="genderMenu" class="hidden absolute top-9 left-0 w-36 bg-white border border-black p-2.5 shadow-lg z-50 text-xs space-y-1 font-medium">
+              <button onclick="filterGender('Women')" class="block w-full text-left py-1 hover:underline">Women</button>
+              <button onclick="filterGender('Men')" class="block w-full text-left py-1 hover:underline">Men</button>
+              <button onclick="filterGender('Unisex')" class="block w-full text-left py-1 hover:underline">Unisex</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sort Dropdown -->
+        <div class="relative shrink-0">
+          <select 
+            id="sortDropdown" 
+            onchange="handleSort(this.value)"
+            class="border border-black/40 rounded-sm px-4 py-1.5 text-xs font-semibold uppercase tracking-wider bg-white cursor-pointer focus:outline-none"
+          >
+            <option value="recommended">RECOMMENDED</option>
+            <option value="price-low">PRICE: LOW TO HIGH</option>
+            <option value="price-high">PRICE: HIGH TO LOW</option>
+            <option value="newest">NEWEST</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN PRODUCT GRID ================= -->
+  <main class="flex-grow max-w-[1520px] mx-auto px-4 sm:px-8 py-8 w-full bg-white">
+    <!-- 4-columns on desktop, 2-columns on mobile matching screenshot -->
+    <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+      <!-- Populated via JavaScript -->
+    </div>
+  </main>
+
+  <!-- ================= REVIEWS / STORY MODAL ================= -->
+  <div id="storyModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white border border-black w-full max-w-sm relative flex flex-col shadow-2xl overflow-hidden font-mono text-xs">
+      
+      <!-- Top Progress Indicator -->
+      <div class="p-3 pb-1 border-b border-black">
+        <div class="h-1 bg-black/10 w-full overflow-hidden">
+          <div id="storyProgressBar" class="h-full bg-black w-0"></div>
+        </div>
+      </div>
+
+      <!-- User Info -->
+      <div class="px-4 py-2.5 flex items-center justify-between border-b border-black">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full border border-black overflow-hidden p-0.5">
+            <img id="reviewUserAvatar" src="" class="w-full h-full object-cover rounded-full" />
+          </div>
+          <div>
+            <span id="reviewUsername" class="font-bold text-xs block"></span>
+            <span id="reviewLocation" class="text-[9px] opacity-60 uppercase block"></span>
+          </div>
+        </div>
+        <button onclick="closeStoryModal()" class="p-1 border border-black hover:bg-black hover:text-white transition">
+          <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Shoe Image in Story -->
+      <div class="p-6 bg-white flex flex-col items-center justify-center border-b border-black h-60 relative">
+        <img id="reviewShoeImage" src="" class="max-h-44 object-contain shoe-shadow" />
+        <span class="absolute bottom-2 left-3 text-[9px] border border-black px-1.5 py-0.2 bg-white font-mono">
+          ✓ VERIFIED BUYER UNBOXING
+        </span>
+      </div>
+
+      <!-- Review Text -->
+      <div class="p-4 space-y-2 bg-white">
+        <div class="flex items-center justify-between">
+          <span id="reviewShoeTitle" class="font-bold text-[11px] uppercase truncate max-w-[210px]"></span>
+          <span class="text-xs">★★★★★</span>
+        </div>
+        <p id="reviewQuote" class="text-xs font-sans leading-relaxed text-black/85"></p>
+        <div class="text-[9px] opacity-60 pt-1 border-t border-black/20 flex justify-between">
+          <span id="reviewDate"></span>
+          <span>100% Transit Inspection</span>
+        </div>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <div class="grid grid-cols-2 border-t border-black text-center text-xs font-medium">
+        <button onclick="prevReviewStory()" class="py-2.5 border-r border-black hover:bg-black hover:text-white transition">← PREV</button>
+        <button onclick="nextReviewStory()" class="py-2.5 hover:bg-black hover:text-white transition">NEXT STORY →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SELLER LISTING MODAL ================= -->
+  <div id="sellerModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop overflow-y-auto">
+    <div class="bg-white border border-black w-full max-w-xl relative my-auto max-h-[92vh] flex flex-col shadow-2xl">
+      <div class="p-5 border-b border-black flex items-center justify-between bg-white">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-widest text-black/60 block">thrift.kick.store</span>
+          <h2 class="text-sm font-semibold uppercase text-black tracking-wider">List Sneaker Drop</h2>
+        </div>
+        <button onclick="closeSellerModal()" class="border border-black p-1 hover:bg-black hover:text-white transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form id="sellerForm" onsubmit="handleSellerSubmit(event)" class="p-6 overflow-y-auto space-y-4 text-xs font-mono bg-white">
+        <div>
+          <label class="block uppercase text-[10px] mb-1">Shoe Model Title *</label>
+          <input type="text" id="sellerTitle" required placeholder="e.g. Palermo Leather White" class="w-full border border-black p-2 text-xs focus:outline-none" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase text-[10px] mb-1">Colorway Tag *</label>
+            <input type="text" id="sellerColors" required value="4 COLORS" class="w-full border border-black p-2 text-xs focus:outline-none" />
+          </div>
+          <div>
+            <label class="block uppercase text-[10px] mb-1">Selling Price (₹) *</label>
+            <input type="number" id="sellerPrice" required value="7499" class="w-full border border-black p-2 text-xs focus:outline-none font-semibold" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block uppercase text-[10px] mb-1">PNG Shoe Image URL *</label>
+          <input type="url" id="sellerImgUrl" required value="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/396464/01/sv01/fnd/IND/fmt/png" class="w-full border border-black p-2 text-xs focus:outline-none" />
+        </div>
+
+        <div class="border border-black p-3 text-[11px] space-y-1">
+          <div class="flex justify-between">
+            <span>Platform Commission (8%):</span>
+            <span id="feePreview">- ₹600</span>
+          </div>
+          <div class="flex justify-between font-semibold border-t border-black pt-1">
+            <span>Estimated Net Payout:</span>
+            <span id="payoutPreview">₹6,899</span>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-black text-white border border-black hover:bg-white hover:text-black py-3 uppercase tracking-widest text-xs transition">
+          Publish to Storefront
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= CART DRAWER ================= -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 modal-backdrop" onclick="toggleCartDrawer(false)"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-full sm:w-96 bg-white border-l border-black flex flex-col z-50 shadow-2xl">
+      <div class="p-5 border-b border-black flex items-center justify-between">
+        <h2 class="text-xs font-semibold uppercase tracking-widest font-mono">Shopping Cart // <span id="cartDrawerCount">0</span> Items</h2>
+        <button onclick="toggleCartDrawer(false)" class="p-1 border border-black hover:bg-black hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-5 space-y-4 font-mono text-xs"></div>
+
+      <div class="p-5 border-t border-black space-y-3 font-mono text-xs">
+        <div class="flex justify-between">
+          <span>Subtotal:</span>
+          <span id="cartSubtotal" class="font-semibold">₹0</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Delivery:</span>
+          <span>FREE</span>
+        </div>
+        <div class="flex justify-between border-t border-black pt-2 font-semibold text-sm">
+          <span>Total:</span>
+          <span id="cartTotal">₹0</span>
+        </div>
+        <button onclick="alert('Order placed successfully via thrift.kick.store Escrow!')" class="w-full bg-black text-white hover:bg-white hover:text-black border border-black py-3 uppercase tracking-widest font-mono transition">
+          Checkout Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= WISHLIST MODAL ================= -->
+  <div id="wishlistModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white border border-black w-full max-w-md p-6 font-mono text-xs">
+      <div class="flex items-center justify-between border-b border-black pb-3 mb-4">
+        <h3 class="font-semibold uppercase tracking-wider">Wishlist (<span id="wishlistModalCount">0</span>)</h3>
+        <button onclick="toggleWishlistModal()"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+      <div id="wishlistContainer" class="space-y-3 max-h-72 overflow-y-auto"></div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // 1. Rectangular Colored Event & Discount Slides (Styled directly from your posters)
+    const offerSlides = [
+      {
+        id: 'big-sale-blue',
+        bgGradient: 'bg-gradient-to-r from-[#001f54] via-[#003580] to-[#001845]',
+        tag: 'SPECIAL OFFER',
+        title: 'BIG SALE',
+        badgeText: 'UP TO 50% OFF',
+        sub: 'PRE-LOVED & DEADSTOCK HEAT // LIMITED SIZES',
+        btnText: 'SHOP NOW',
+        filterAction: 'SALE',
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:001f54,w_600,h_600/global/396464/01/sv01/fnd/IND/fmt/png'
+      },
+      {
+        id: 'sage-kicks',
+        bgGradient: 'bg-gradient-to-r from-[#313d2c] via-[#48563f] to-[#263122]',
+        tag: 'THRIFT EDITION',
+        title: 'ARCHIVE KICKS',
+        badgeText: 'COMFORT & VINTAGE',
+        sub: 'Being stylish does not need to sacrifice comfort.',
+        btnText: 'EXPLORE THRIFT',
+        filterAction: 'PRE_LOVED',
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:313d2c,w_600,h_600/global/374915/01/sv01/fnd/IND/fmt/png'
+      },
+      {
+        id: 'ice-shine',
+        bgGradient: 'bg-gradient-to-r from-[#0a2540] via-[#103d6d] to-[#05192d]',
+        tag: 'VERIFIED DROPS',
+        title: 'SHINE EVERY STEP',
+        badgeText: '100% AUTHENTIC',
+        sub: 'Because every step requires confidence. Legit-checked by hand.',
+        btnText: 'VIEW DEADSTOCK',
+        filterAction: 'BRAND_NEW',
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:0a2540,w_600,h_600/global/380190/01/sv01/fnd/IND/fmt/png'
+      },
+      {
+        id: 'cobalt-arrival',
+        bgGradient: 'bg-gradient-to-r from-[#08306b] via-[#08519c] to-[#08234a]',
+        tag: 'JUST LANDED',
+        title: 'NEW ARRIVAL',
+        badgeText: '20% OFF ESCROW',
+        sub: 'Freshly consigned pairs from verified independent boutiques.',
+        btnText: 'DISCOVER PAIRS',
+        filterAction: 'NEW',
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:08306b,w_600,h_600/global/377787/01/sv01/fnd/IND/fmt/png'
+      }
+    ];
+
+    let currentOfferIndex = 0;
+    let offerInterval = null;
+
+    // 2. Buyer Review Stories (Triggered by the 4 visual circles)
+    const reviewStories = [
+      {
+        id: 'review-black',
+        user: '@sneakerhead_mumbai',
+        location: 'Mumbai, MH',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+        shoeTitle: "Suede Classic XXI Black",
+        shoeImage: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/374915/01/sv01/fnd/IND/fmt/png',
+        quote: "Condition was 10/10 deadstock. Delivery took 48 hours to Bandra. Legit-checked and verified authentic through thrift.kick.store!",
+        date: "Yesterday"
+      },
+      {
+        id: 'review-ballet',
+        user: '@riya.archive',
+        location: 'Delhi, NCR',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80',
+        shoeTitle: "Palermo Leather Terrace White",
+        shoeImage: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/396464/01/sv01/fnd/IND/fmt/png',
+        quote: "Saved ₹2,500 off retail price on this pair. Soles were totally clean, no creasing, genuine box included.",
+        date: "3 days ago"
+      },
+      {
+        id: 'review-red',
+        user: '@sparco_kicks',
+        location: 'Bangalore, KA',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
+        shoeTitle: "Retro Low Archive Red",
+        shoeImage: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/339844/01/sv01/fnd/IND/fmt/png',
+        quote: "Rare vintage archive pair in pure deadstock. Verified genuine on arrival. Super smooth escrow experience.",
+        date: "5 days ago"
+      },
+      {
+        id: 'review-motorsport',
+        user: '@speed_pune',
+        location: 'Pune, MH',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
+        shoeTitle: "Slipstream B-Ball Heritage",
+        shoeImage: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/393266/01/sv01/fnd/IND/fmt/png',
+        quote: "Best P2P platform in India for curated thrift and deadstock sneakers. Escrow protection gives 100% peace of mind.",
+        date: "1 week ago"
+      }
+    ];
+
+    let currentReviewIndex = 0;
+    let reviewStoryTimer = null;
+
+    // 3. Diversified Sneakers Catalog (Free of Speedcat references)
+    let shoes = [
+      {
+        id: 'palermo-og-terrace',
+        colorsCount: '4 COLORS',
+        title: "Palermo Leather Terrace Low",
+        price: 7499,
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/396464/01/sv01/fnd/IND/fmt/png',
+        type: 'Sneakers',
+        category: 'BRAND_NEW',
+        colorCategory: 'White',
+        gender: 'Men'
+      },
+      {
+        id: 'suede-classic-xxi',
+        colorsCount: '6 COLORS',
+        title: "Suede Classic XXI Iconic Black",
+        price: 6999,
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/374915/01/sv01/fnd/IND/fmt/png',
+        type: 'Sneakers',
+        category: 'PRE_LOVED',
+        colorCategory: 'Black',
+        gender: 'Unisex'
+      },
+      {
+        id: 'ca-pro-classic',
+        colorsCount: '3 COLORS',
+        title: "CA Pro Classic Triple White",
+        price: 7999,
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/380190/01/sv01/fnd/IND/fmt/png',
+        type: 'Sneakers',
+        category: 'BRAND_NEW',
+        colorCategory: 'White',
+        gender: 'Women'
+      },
+      {
+        id: 'retro-sparco-red',
+        colorsCount: '3 COLORS',
+        title: "Retro Sparco Racing Sneaker Red",
+        price: 8499,
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/339844/01/sv01/fnd/IND/fmt/png',
+        type: 'Motorsport',
+        category: 'PRE_LOVED',
+        colorCategory: 'Red',
+        gender: 'Unisex'
+      },
+      {
+        id: 'slipstream-bball',
+        colorsCount: '5 COLORS',
+        title: "Slipstream B-Ball Heritage Archive",
+        price: 6499,
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/393266/01/sv01/fnd/IND/fmt/png',
+        type: 'Sneakers',
+        category: 'PRE_LOVED',
+        colorCategory: 'White',
+        gender: 'Men'
+      },
+      {
+        id: 'blktop-rider-suede',
+        colorsCount: '4 COLORS',
+        title: "Blktop Rider 80s Suede Reissue",
+        price: 5499,
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/392725/07/sv01/fnd/IND/fmt/png',
+        type: 'Sneakers',
+        category: 'PRE_LOVED',
+        colorCategory: 'Brown',
+        gender: 'Men'
+      },
+      {
+        id: 'deviate-nitro-elite',
+        colorsCount: '2 COLORS',
+        title: "Deviate NITRO™ Elite 2 Racer",
+        price: 15999,
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/377787/01/sv01/fnd/IND/fmt/png',
+        type: 'Running',
+        category: 'BRAND_NEW',
+        colorCategory: 'White',
+        gender: 'Unisex'
+      },
+      {
+        id: 'army-trainer-archive',
+        colorsCount: '4 COLORS',
+        title: "Army Trainer German Heritage Gum",
+        price: 7999,
+        image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/386607/01/sv01/fnd/IND/fmt/png',
+        type: 'Sneakers',
+        category: 'BRAND_NEW',
+        colorCategory: 'Black',
+        gender: 'Unisex'
+      }
+    ];
+
+    let cart = [];
+    let wishlist = [];
+    let activePriceFilter = 25000;
+    let activeColorFilter = null;
+    let activeGenderFilter = null;
+    let searchQuery = '';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initOfferBanner();
+      renderProducts();
+      lucide.createIcons();
+    });
+
+    /* ================= HOME RESET ================= */
+    function goHome() {
+      resetFilters();
+      toggleCartDrawer(false);
+      toggleMobileNav(false);
+      document.getElementById('currentBreadcrumb').textContent = 'CURATED DROPS';
+      document.getElementById('catalogHeaderTitle').textContent = 'CURATED ARCHIVE DROPS';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ================= COLORFUL RECTANGULAR EVENT SLIDER ================= */
+    function initOfferBanner() {
+      renderOfferSlide();
+      renderSlideDots();
+      offerInterval = setInterval(nextOfferSlide, 4500);
+    }
+
+    function renderOfferSlide() {
+      const container = document.getElementById('offerSlideWrapper');
+      const slide = offerSlides[currentOfferIndex];
+      container.style.opacity = '0';
+
+      setTimeout(() => {
+        container.className = `transition-opacity duration-300 w-full min-h-[140px] sm:min-h-[170px] md:min-h-[190px] border border-black overflow-hidden relative flex items-center justify-between px-6 sm:px-12 ${slide.bgGradient} text-white`;
+
+        container.innerHTML = `
+          <!-- Left Column: Typography & Badges -->
+          <div class="flex flex-col text-left justify-center space-y-1 sm:space-y-2 max-w-xl z-10 py-4">
+            <div class="flex items-center gap-2">
+              <span class="text-[9px] sm:text-[10px] font-mono tracking-widest uppercase border border-white px-2 py-0.5 inline-block bg-black/40">
+                ${slide.tag}
+              </span>
+              <span class="text-[9px] sm:text-[10px] font-mono tracking-wider uppercase bg-white text-black font-bold px-2 py-0.5">
+                ${slide.badgeText}
+              </span>
+            </div>
+
+            <h2 class="text-xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight leading-none drop-shadow-md">
+              ${slide.title}
+            </h2>
+
+            <p class="text-[10px] sm:text-xs font-mono uppercase opacity-90 tracking-tight leading-tight">
+              ${slide.sub}
+            </p>
+
+            <div class="pt-1">
+              <button 
+                onclick="handleBannerAction('${slide.filterAction}')" 
+                class="bg-white text-black hover:bg-black hover:text-white border border-white px-4 py-1.5 text-xs font-bold font-mono uppercase tracking-wider transition shadow-sm"
+              >
+                ${slide.btnText} →
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: High-Contrast Sneaker PNG Image -->
+          <div class="flex items-center justify-center shrink-0 w-36 sm:w-56 md:w-72 h-28 sm:h-36 md:h-44 z-10">
+            <img 
+              src="${slide.image}" 
+              alt="${slide.title}" 
+              class="max-h-full max-w-full object-contain filter drop-shadow-[0_12px_12px_rgba(0,0,0,0.6)] transform -rotate-12 hover:rotate-0 transition-transform duration-500"
+            />
+          </div>
+        `;
+
+        container.style.opacity = '1';
+        updateSlideDots();
+      }, 150);
+    }
+
+    function renderSlideDots() {
+      const dotsContainer = document.getElementById('slideDotsContainer');
+      dotsContainer.innerHTML = offerSlides.map((_, i) => `
+        <button onclick="setOfferSlide(${i})" class="w-2.5 h-1 ${i === currentOfferIndex ? 'bg-black' : 'bg-black/20'} transition-all"></button>
+      `).join('');
+    }
+
+    function updateSlideDots() {
+      const dots = document.querySelectorAll('#slideDotsContainer button');
+      dots.forEach((dot, idx) => {
+        if (idx === currentOfferIndex) dot.className = "w-6 h-1 bg-black transition-all";
+        else dot.className = "w-2.5 h-1 bg-black/20 transition-all";
+      });
+    }
+
+    function setOfferSlide(i) {
+      currentOfferIndex = i;
+      renderOfferSlide();
+    }
+
+    function nextOfferSlide() {
+      currentOfferIndex = (currentOfferIndex + 1) % offerSlides.length;
+      renderOfferSlide();
+    }
+
+    function prevOfferSlide() {
+      currentOfferIndex = (currentOfferIndex - 1 + offerSlides.length) % offerSlides.length;
+      renderOfferSlide();
+    }
+
+    function handleBannerAction(action) {
+      if (action === 'SALE' || action === 'PRE_LOVED') quickFilterCategory('PRE_LOVED');
+      else if (action === 'BRAND_NEW') quickFilterCategory('BRAND_NEW');
+      else quickFilterCategory('ALL');
+    }
+
+    /* ================= REVIEW STORIES ================= */
+    function filterByStyleCircle(style, reviewIndex) {
+      if (style === 'Black') activeColorFilter = 'Black';
+      else if (style === 'Red') activeColorFilter = 'Red';
+      else if (style === 'Ballet') searchQuery = 'Ballet';
+      else if (style === 'Motorsport') searchQuery = 'Motorsport';
+
+      renderProducts();
+      openReviewStory(reviewIndex);
+    }
+
+    function openReviewStory(index) {
+      currentReviewIndex = index;
+      renderReviewStory();
+      document.getElementById('storyModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      startReviewStoryTimer();
+      lucide.createIcons();
+    }
+
+    function closeStoryModal() {
+      document.getElementById('storyModal').classList.add('hidden');
+      document.body.style.overflow = '';
+      clearTimeout(reviewStoryTimer);
+    }
+
+    function renderReviewStory() {
+      const review = reviewStories[currentReviewIndex];
+      document.getElementById('reviewUserAvatar').src = review.avatar;
+      document.getElementById('reviewUsername').textContent = review.user;
+      document.getElementById('reviewLocation').textContent = review.location;
+      document.getElementById('reviewShoeImage').src = review.shoeImage;
+      document.getElementById('reviewShoeTitle').textContent = review.shoeTitle;
+      document.getElementById('reviewQuote').textContent = `"${review.quote}"`;
+      document.getElementById('reviewDate').textContent = review.date;
+
+      const bar = document.getElementById('storyProgressBar');
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.width = '100%'; bar.style.transition = 'width 5s linear'; }, 50);
+    }
+
+    function startReviewStoryTimer() {
+      clearTimeout(reviewStoryTimer);
+      reviewStoryTimer = setTimeout(() => {
+        nextReviewStory();
+      }, 5000);
+    }
+
+    function nextReviewStory() {
+      if (currentReviewIndex < reviewStories.length - 1) {
+        currentReviewIndex++;
+        renderReviewStory();
+        startReviewStoryTimer();
+      } else {
+        closeStoryModal();
+      }
+    }
+
+    function prevReviewStory() {
+      if (currentReviewIndex > 0) {
+        currentReviewIndex--;
+        renderReviewStory();
+        startReviewStoryTimer();
+      }
+    }
+
+    /* ================= PRODUCT GRID RENDERING ================= */
+    function formatINR(val) {
+      return '₹' + val.toLocaleString('en-IN');
+    }
+
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      
+      let filtered = shoes.filter(s => {
+        const matchesPrice = s.price <= activePriceFilter;
+        const matchesColor = !activeColorFilter || s.colorCategory === activeColorFilter;
+        const matchesGender = !activeGenderFilter || s.gender === activeGenderFilter || s.gender === 'Unisex';
+        const matchesSearch = !searchQuery || s.title.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesPrice && matchesColor && matchesGender && matchesSearch;
+      });
+
+      if (!filtered.length) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center font-mono text-xs">
+            <p class="uppercase font-semibold">[ NO MATCHING KICKS FOUND ]</p>
+            <button onclick="resetFilters()" class="mt-3 border border-black px-4 py-1.5 uppercase hover:bg-black hover:text-white transition">Reset Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(shoe => {
+        const isWish = wishlist.includes(shoe.id);
+        return `
+          <div class="product-card flex flex-col group cursor-pointer" onclick="addToCart('${shoe.id}'); toggleCartDrawer(true);">
+            
+            <!-- Picture Box Container: Pure White with Isolated Shoe PNG -->
+            <div class="relative w-full aspect-square bg-white flex items-center justify-center overflow-hidden border border-transparent group-hover:border-black transition">
+              <img 
+                src="${shoe.image}" 
+                alt="${shoe.title}" 
+                class="shoe-img w-full h-full object-contain p-2 sm:p-4"
+                loading="lazy"
+                onerror="this.src='https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:ffffff,w_600,h_600/global/396464/01/sv01/fnd/IND/fmt/png'"
+              />
+
+              <!-- Wishlist Heart -->
+              <button 
+                onclick="event.stopPropagation(); toggleWishlist('${shoe.id}')"
+                class="absolute top-2 right-2 p-1.5 text-black hover:scale-110 transition z-10"
+              >
+                <i data-lucide="heart" class="w-4 h-4 ${isWish ? 'fill-black' : ''}"></i>
+              </button>
+            </div>
+
+            <!-- Meta Details exactly like your screenshot -->
+            <div class="mt-2.5 space-y-1 font-mono">
+              <span class="text-[10px] md:text-[11px] font-normal uppercase opacity-70 tracking-wider block">
+                ${shoe.colorsCount}
+              </span>
+              
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-[11px] sm:text-xs font-semibold uppercase tracking-tight text-black line-clamp-2 leading-snug flex-1 font-sans">
+                  ${shoe.title}
+                </h3>
+                <span class="text-[11px] sm:text-xs font-semibold text-black shrink-0 font-sans">
+                  ${formatINR(shoe.price)}
+                </span>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    /* ================= FILTERS & TOOLBAR ================= */
+    function toggleFilterMenu(menuId) {
+      const menu = document.getElementById(menuId);
+      const isHidden = menu.classList.contains('hidden');
+      document.querySelectorAll('#productTypeMenu, #priceMenu, #sizeMenu, #colorMenu, #discountMenu, #genderMenu').forEach(el => {
+        if (el.id !== menuId) el.classList.add('hidden');
+      });
+      if (isHidden) menu.classList.remove('hidden');
+      else menu.classList.add('hidden');
+    }
+
+    function handlePriceRange(val) {
+      activePriceFilter = parseInt(val, 10);
+      document.getElementById('priceLabel').textContent = formatINR(activePriceFilter);
+      renderProducts();
+    }
+
+    function filterColor(c) {
+      activeColorFilter = activeColorFilter === c ? null : c;
+      renderProducts();
+    }
+
+    function filterGender(g) {
+      activeGenderFilter = activeGenderFilter === g ? null : g;
+      renderProducts();
+    }
+
+    function filterBySize(s) {
+      searchQuery = s;
+      renderProducts();
+    }
+
+    function filterProductType(t) {
+      searchQuery = t;
+      renderProducts();
+    }
+
+    function filterDiscount(d) {
+      renderProducts();
+    }
+
+    function filterCategory(cat) {
+      if (cat === 'ALL') {
+        activeColorFilter = null;
+        activeGenderFilter = null;
+        searchQuery = '';
+      }
+      renderProducts();
+    }
+
+    function quickFilterCategory(cat) {
+      filterCategory(cat);
+    }
+
+    function quickFilterGender(g) {
+      filterGender(g);
+    }
+
+    function quickFilterMenu(tag) {
+      if (tag === 'MEN') activeGenderFilter = 'Men';
+      else if (tag === 'WOMEN') activeGenderFilter = 'Women';
+      else if (tag === 'MOTORSPORT') searchQuery = 'Motorsport';
+      else {
+        activeGenderFilter = null;
+        searchQuery = '';
+      }
+      renderProducts();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim();
+      renderProducts();
+    }
+
+    function resetFilters() {
+      activePriceFilter = 25000;
+      activeColorFilter = null;
+      activeGenderFilter = null;
+      searchQuery = '';
+      document.getElementById('headerSearchInput').value = '';
+      const mInput = document.getElementById('mobileSearchInput');
+      if (mInput) mInput.value = '';
+      renderProducts();
+    }
+
+    function handleSort(order) {
+      if (order === 'price-low') shoes.sort((a, b) => a.price - b.price);
+      if (order === 'price-high') shoes.sort((a, b) => b.price - a.price);
+      renderProducts();
+    }
+
+    function toggleSearchBar() {
+      const input = document.getElementById('headerSearchInput');
+      input.classList.toggle('hidden');
+      if (!input.classList.contains('hidden')) input.focus();
+    }
+
+    function toggleMobileSearch() {
+      const bar = document.getElementById('mobileSearchBar');
+      bar.classList.toggle('hidden');
+      if (!bar.classList.contains('hidden')) document.getElementById('mobileSearchInput').focus();
+    }
+
+    function toggleMobileNav(open) {
+      const drawer = document.getElementById('mobileNavDrawer');
+      if (open) {
+        drawer.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+      lucide.createIcons();
+    }
+
+    /* ================= WISHLIST & CART ================= */
+    function toggleWishlist(id) {
+      const idx = wishlist.indexOf(id);
+      if (idx > -1) wishlist.splice(idx, 1);
+      else wishlist.push(id);
+      document.getElementById('wishlistCountBadge').textContent = wishlist.length;
+      document.getElementById('wishlistModalCount').textContent = wishlist.length;
+      renderProducts();
+      renderWishlistItems();
+    }
+
+    function toggleWishlistModal() {
+      const modal = document.getElementById('wishlistModal');
+      modal.classList.toggle('hidden');
+      renderWishlistItems();
+      lucide.createIcons();
+    }
+
+    function renderWishlistItems() {
+      const container = document.getElementById('wishlistContainer');
+      const items = shoes.filter(s => wishlist.includes(s.id));
+      if (!items.length) {
+        container.innerHTML = '<div class="text-center py-6 opacity-60">Wishlist empty</div>';
+        return;
+      }
+      container.innerHTML = items.map(i => `
+        <div class="flex items-center justify-between border-b border-black pb-2">
+          <div class="flex items-center gap-2">
+            <img src="${i.image}" class="w-10 h-10 object-contain" />
+            <span class="text-[11px] truncate max-w-[180px]">${i.title}</span>
+          </div>
+          <button onclick="addToCart('${i.id}')" class="border border-black px-2 py-0.5 text-[10px] uppercase font-bold">+ Bag</button>
+        </div>
+      `).join('');
+    }
+
+    function addToCart(id) {
+      const shoe = shoes.find(s => s.id === id);
+      if (!shoe) return;
+      cart.push(shoe);
+      updateCartUI();
+    }
+
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cartDrawer');
+      if (open) {
+        drawer.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+      updateCartUI();
+      lucide.createIcons();
+    }
+
+    function updateCartUI() {
+      document.getElementById('cartCountBadge').textContent = cart.length;
+      document.getElementById('cartDrawerCount').textContent = cart.length;
+      const container = document.getElementById('cartItemsContainer');
+
+      if (!cart.length) {
+        container.innerHTML = '<div class="text-center py-10 opacity-50">Your shopping bag is empty</div>';
+      } else {
+        container.innerHTML = cart.map((item, idx) => `
+          <div class="flex items-center justify-between border-b border-black pb-3">
+            <div class="flex items-center gap-3">
+              <img src="${item.image}" class="w-12 h-12 object-contain" />
+              <div>
+                <div class="font-semibold text-xs truncate max-w-[180px]">${item.title}</div>
+                <div class="text-[11px]">${formatINR(item.price)}</div>
+              </div>
+            </div>
+            <button onclick="removeFromCart(${idx})" class="p-1 hover:opacity-60"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+          </div>
+        `).join('');
+      }
+
+      const total = cart.reduce((acc, c) => acc + c.price, 0);
+      document.getElementById('cartSubtotal').textContent = formatINR(total);
+      document.getElementById('cartTotal').textContent = formatINR(total);
+      lucide.createIcons();
+    }
+
+    function removeFromCart(idx) {
+      cart.splice(idx, 1);
+      updateCartUI();
+    }
+
+    /* ================= SELLER MODAL ================= */
+    function openSellerModal() {
+      document.getElementById('sellerModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons();
+    }
+    function closeSellerModal() {
+      document.getElementById('sellerModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function handleSellerSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('sellerTitle').value;
+      const colors = document.getElementById('sellerColors').value;
+      const price = parseInt(document.getElementById('sellerPrice').value, 10);
+      const img = document.getElementById('sellerImgUrl').value;
+
+      shoes.unshift({
+        id: 'shoe-' + Date.now(),
+        title,
+        colorsCount: colors,
+        price,
+        image: img,
+        type: 'Sneakers',
+        category: 'BRAND_NEW',
+        colorCategory: 'Custom',
+        gender: 'Unisex'
+      });
+
+      renderProducts();
+      closeSellerModal();
+      document.getElementById('sellerForm').reset();
+    }
+  </script>
+</body>
+</html>
